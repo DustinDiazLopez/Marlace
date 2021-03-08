@@ -66,5 +66,10 @@
 			<url>https://repo.spring.io/milestone</url>
 		</pluginRepository>
 	</pluginRepositories>
-
+	<distributionManagement>
+		<repository>
+			<id>release</id>
+			<url>${project.baseUri}/target</url>
+		</repository>
+	</distributionManagement>
 </project>
