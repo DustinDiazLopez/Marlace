@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 @Service
@@ -19,8 +20,11 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public User validateUser(String fistName, String lastName, String email, String password) throws EtAuthException {
-        return null;
+    public User validateUser(String email, String password) throws EtAuthException {
+        if (email != null) email = email.toLowerCase();
+        else throw new EtAuthException("Email cannot be null");
+        if (password == null) throw new EtAuthException("Password cannot be null");
+        return userRepository.findUserByEmailAndPassword(email, password);
     }
 
     @Override

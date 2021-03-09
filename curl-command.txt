@@ -1,1 +1,3 @@
-curl -X POST -H "Content-Type: application/json" -d '{"firstName": "Dustin", "lastName": "Díaz", "email": "linuxize@example.com", "password": "hello-password"}' http://localhost:8080/api/u/register
+curl -X POST -H "Content-Type: application/json" -d '{"firstName": "Dustin", "lastName": "Díaz", "email": "dustindiaz@example.com", "password": "hello-password"}' http://localhost:8080/api/u/register
+curl -X POST -H "Content-Type: application/json" -d '{"email": "dustindiaz@example.com", "password": "hello-password"}' http://localhost:8080/api/u/login
+curl -X GET -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MTUzMzg3MDIsInVzZXJJZCI6MSwiZW1haWwiOiJkdXN0aW5kaWF6QGV4YW1wbGUuY29tIiwiZmlyc3ROYW1lIjoiRHVzdGluIiwibGFzdE5hbWUiOiJEw61heiJ9.bRthfKxxky66VwhgPUmn7oYfSKnatqL3cmvxvndEd8P5OTp1fuFVtbfxOuZQSb3NP7etCnEsVcMghzjAwvlPlw" http://localhost:8080/api/categories
