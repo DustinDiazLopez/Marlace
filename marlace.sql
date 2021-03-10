@@ -94,3 +94,9 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 --     ON c.`category_id` = t.`category_id` 
 --     WHERE c.`user_id` = ? AND c.`category_id` = ? 
 --     GROUP BY c.`category_id`;
+
+INSERT INTO `users`(user_id, first_name, last_name, email, password) VALUES (1, 'Dustin', 'Díaz', 'dustindiaz@example.com', '$2a$10$/CBbhA8Z2nWU3hySaPV3VOCgBMDEeokfMmmcIdd6gIP4AR0EB90l6');
+INSERT INTO `categories`(`user_id`, `title`, `description`) VALUES (1, 'example 1', 'this is a description ');
+
+SELECT * FROM users;
+SELECT * FROM categories;

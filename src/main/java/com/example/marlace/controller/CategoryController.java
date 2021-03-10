@@ -25,7 +25,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<Category> addCategory(HttpServletRequest request, @RequestBody Map<String, Object> body) {
-        final Integer userId = (Integer) body.get("userId");
+        final Integer userId = (Integer) request.getAttribute("userId");
         final String title = (String) body.get("title");
         final String description = (String) body.get("description");
         final Category category = categoryService.addCategory(userId, title, description);

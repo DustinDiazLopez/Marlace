@@ -24,6 +24,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
             "\tWHERE c.`user_id` = ? AND c.`category_id` = ? \n" +
             "\tGROUP BY c.`category_id`";
     private static final String SQL_CREATE_CATEGORY = "INSERT INTO `categories`(`user_id`, `title`, `description`) VALUES (?, ?, ?)";
+    private static final String SQL_SELECT_CATEGORY_BY_ID_FALLBACK = "SELECT * FROM `categories` WHERE user_id = ? AND category_id = ?";
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -42,6 +43,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
                     categoryRowMapper
             );
         } catch (Exception e) {
+            e.printStackTrace();
             throw new EtResourceNotFoundException("The specified category was not found.");
         }
     }
@@ -56,13 +58,14 @@ public class CategoryRepositoryImpl implements CategoryRepository {
                 ps.setInt(++index, userId);
                 ps.setString(++index, title);
                 ps.setString(++index, description);
-                return ps;
-            });
+                System.out.println(ps);
 
-            System.out.println(keyHolder.getKeys());
-            System.out.println(keyHolder.getKeys().get("GENERATED_KEY"));
-            return (Integer) keyHolder.getKeys().get("GENERATED_KEY");
+                return ps;
+            }, keyHolder);
+            final String generatedKey = keyHolder.getKeys().get("GENERATED_KEY").toString();
+            return Integer.parseInt(generatedKey);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new EtBadRequestException("Invalid request. Failed to create category.");
         }
     }
@@ -83,5 +86,13 @@ public class CategoryRepositoryImpl implements CategoryRepository {
             rs.getString("title"),
             rs.getString("description"),
             rs.getFloat("total_expense")
+    ));
+
+    private final RowMapper<Category> categoryRowMapperNoExpense = ((rs, numOfRows) -> new Category(
+            rs.getInt("category_id"),
+            rs.getInt("user_id"),
+            rs.getString("title"),
+            rs.getString("description"),
+            0f
     ));
 }

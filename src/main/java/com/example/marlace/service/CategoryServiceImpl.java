@@ -29,7 +29,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category addCategory(Integer userId, String title, String description) throws EtBadRequestException {
-        final int categoryId = categoryRepository.create(userId, title, description);
+        final Integer categoryId = categoryRepository.create(userId, title, description);
+        System.err.println(categoryId);
         return categoryRepository.findById(userId, categoryId);
     }
 
