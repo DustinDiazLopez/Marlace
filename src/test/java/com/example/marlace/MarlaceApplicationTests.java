@@ -8,6 +8,7 @@ class MarlaceApplicationTests {
 
     @Test
     void contextLoads() {
+        System.out.println(this.getClass());
     }
 
 }

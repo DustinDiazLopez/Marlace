@@ -1,6 +1,6 @@
 package com.example.marlace.repository;
 
-import com.example.marlace.exception.EtAuthException;
+import com.example.marlace.exceptions.EtAuthException;
 import com.example.marlace.model.User;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;

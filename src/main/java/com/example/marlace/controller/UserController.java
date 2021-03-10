@@ -22,7 +22,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/login")
+    @PostMapping(path = "/login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Map<String, String>> loginUser(@RequestBody Map<String, Object> userMap) {
         final String email = (String) userMap.get("email");
         final String password = (String) userMap.get("password");
@@ -30,14 +30,14 @@ public class UserController {
         return new ResponseEntity<>(generateJWTToken(user), HttpStatus.OK);
     }
 
-    @PostMapping("/register")
+    @PostMapping(path = "/register", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Map<String, String>> registerUser(@RequestBody Map<String, Object> userMap) {
         final String firstName = (String) userMap.get("firstName");
         final String lastName = (String) userMap.get("lastName");
         final String email = (String) userMap.get("email");
         final String password = (String) userMap.get("password");
         final User user = userService.registerUser(firstName, lastName, email, password);
-        return new ResponseEntity<>(generateJWTToken(user), HttpStatus.OK);
+        return new ResponseEntity<>(generateJWTToken(user), HttpStatus.CREATED);
     }
 
     private Map<String, String> generateJWTToken(final User user) {

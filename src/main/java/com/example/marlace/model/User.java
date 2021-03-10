@@ -21,8 +21,6 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
     }
 
     public User(Integer userId, String firstName, String lastName, String email, String password,

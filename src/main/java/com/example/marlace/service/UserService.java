@@ -1,6 +1,6 @@
 package com.example.marlace.service;
 
-import com.example.marlace.exception.EtAuthException;
+import com.example.marlace.exceptions.EtAuthException;
 import com.example.marlace.model.User;
 
 public interface UserService {
