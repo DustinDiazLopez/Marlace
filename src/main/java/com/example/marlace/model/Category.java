@@ -7,13 +7,13 @@ public class Category {
     private Integer userId;
     private String title;
     private String description;
-    private Float totalExpenses;
+    private Double totalExpenses;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public Category() {}
 
-    public Category(Integer categoryId, Integer userId, String title, String description, Float totalExpenses) {
+    public Category(Integer categoryId, Integer userId, String title, String description, Double totalExpenses) {
         this.categoryId = categoryId;
         this.userId = userId;
         this.title = title;
@@ -53,11 +53,11 @@ public class Category {
         this.description = description;
     }
 
-    public Float getTotalExpenses() {
+    public Double getTotalExpenses() {
         return totalExpenses;
     }
 
-    public void setTotalExpenses(Float totalExpenses) {
+    public void setTotalExpenses(Double totalExpenses) {
         this.totalExpenses = totalExpenses;
     }
 

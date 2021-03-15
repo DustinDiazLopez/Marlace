@@ -44,8 +44,8 @@ public class UserController {
         final long timestamp = System.currentTimeMillis();
         final String token = Jwts
                 .builder()
-                .signWith(SignatureAlgorithm.HS512, Constants.API_SECRET_KEY)
-                .setIssuedAt(new Date(timestamp + Constants.TOKEN_VALIDITY))
+                .signWith(SignatureAlgorithm.HS512, Constants.JWT.JWT_SECRET_KEY)
+                .setIssuedAt(new Date(timestamp + Constants.JWT.TOKEN_DURATION))
                 .claim("userId", user.getUserId())
                 .claim("email", user.getEmail())
                 .claim("firstName", user.getFirstName())

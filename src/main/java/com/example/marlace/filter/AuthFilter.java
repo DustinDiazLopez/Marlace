@@ -27,7 +27,7 @@ public class AuthFilter extends GenericFilterBean {
             if(authHeaderArr.length > 1 && authHeaderArr[1] != null) {
                 String token = authHeaderArr[1];
                 try {
-                    Claims claims = Jwts.parser().setSigningKey(Constants.API_SECRET_KEY)
+                    Claims claims = Jwts.parser().setSigningKey(Constants.JWT.JWT_SECRET_KEY)
                             .parseClaimsJws(token).getBody();
                     httpRequest.setAttribute("userId", Integer.parseInt(claims.get("userId").toString()));
                 }catch (Exception e) {
