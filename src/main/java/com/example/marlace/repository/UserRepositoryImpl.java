@@ -1,6 +1,7 @@
 package com.example.marlace.repository;
 
 import com.example.marlace.exceptions.EtAuthException;
+import com.example.marlace.mappers.UserRowMapper;
 import com.example.marlace.model.User;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -61,12 +63,20 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User findUserByEmailAndPassword(String email, String password) throws EtAuthException {
         try {
-            final User user = jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_EMAIL, new Object[]{email}, userRowMapper);
-            if (user != null) {
-                if (!BCrypt.checkpw(password, user.getPassword())) {
+            final List<User> users = jdbcTemplate.query(
+                    SQL_SELECT_USER_BY_EMAIL,
+                    new Object[]{email},
+                    new int[]{},
+                    new UserRowMapper()
+            );
+
+            System.err.println(users.size());
+
+            if (users.size() == 1) {
+                if (!BCrypt.checkpw(password, users.get(0).getPassword())) {
                     throw new EtAuthException("Invalid email and/or password.");
                 } else {
-                    return user;
+                    return users.get(0);
                 }
             }
         } catch (EmptyResultDataAccessException ignored) {

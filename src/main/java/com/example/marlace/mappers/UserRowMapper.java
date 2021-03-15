@@ -1,5 +1,6 @@
-package com.example.marlace.model;
+package com.example.marlace.mappers;
 
+import com.example.marlace.model.User;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
