@@ -3,15 +3,19 @@ package com.example.marlace.service;
 import com.example.marlace.exceptions.EtAuthException;
 import com.example.marlace.model.User;
 import com.example.marlace.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.example.marlace.Constants.Patterns.EMAIL_PATTERN;
+import static com.example.marlace.utils.Constants.Patterns.EMAIL_PATTERN;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     UserRepository userRepository;

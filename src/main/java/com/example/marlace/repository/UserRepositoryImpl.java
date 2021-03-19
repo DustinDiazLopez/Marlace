@@ -1,13 +1,13 @@
 package com.example.marlace.repository;
 
 import com.example.marlace.exceptions.EtAuthException;
-import com.example.marlace.mappers.UserRowMapper;
 import com.example.marlace.model.User;
 import org.mindrot.jbcrypt.BCrypt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -24,6 +24,9 @@ public class UserRepositoryImpl implements UserRepository {
     private static final String SQL_SELECT_USER_BY_ID = "SELECT * FROM `users` WHERE `user_id` = ?";
     private static final String SQL_SELECT_USER_BY_EMAIL = "SELECT * FROM `users` WHERE `email` = ?";
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private final UserRowMapper userRowMapper = new UserRowMapper();
+
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -31,6 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
     public Integer create(String firstName, String lastName, String email, String password) throws EtAuthException {
         final String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(10));
         try {
+
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(connection -> {
                 PreparedStatement ps = connection.prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS);
@@ -67,10 +71,8 @@ public class UserRepositoryImpl implements UserRepository {
                     SQL_SELECT_USER_BY_EMAIL,
                     new Object[]{email},
                     new int[]{},
-                    new UserRowMapper()
+                    userRowMapper
             );
-
-            System.err.println(users.size());
 
             if (users.size() == 1) {
                 if (!BCrypt.checkpw(password, users.get(0).getPassword())) {
@@ -102,12 +104,4 @@ public class UserRepositoryImpl implements UserRepository {
     public User findById(Integer userId) {
         return jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_ID, userRowMapper, userId);
     }
-
-    private final RowMapper<User> userRowMapper = ((rs, numOfRows) -> new User(
-            rs.getInt("user_id"),
-            rs.getString("first_name"),
-            rs.getString("last_name"),
-            rs.getString("email"),
-            rs.getString("password")
-    ));
 }

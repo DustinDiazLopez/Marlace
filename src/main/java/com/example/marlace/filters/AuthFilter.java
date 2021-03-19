@@ -1,7 +1,7 @@
-package com.example.marlace.filter;
+package com.example.marlace.filters;
 
 
-import com.example.marlace.Constants;
+import com.example.marlace.utils.Constants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
 package com.example.marlace.controller;
 
-import com.example.marlace.Constants;
+import com.example.marlace.utils.Constants;
 import com.example.marlace.model.User;
 import com.example.marlace.service.UserService;
 import io.jsonwebtoken.Jwts;

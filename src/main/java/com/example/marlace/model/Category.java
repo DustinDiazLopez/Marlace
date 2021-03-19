@@ -1,5 +1,6 @@
 package com.example.marlace.model;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Category {
@@ -8,8 +9,8 @@ public class Category {
     private String title;
     private String description;
     private Double totalExpenses;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
     public Category() {}
 
@@ -61,19 +62,19 @@ public class Category {
         this.totalExpenses = totalExpenses;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 }

@@ -1,9 +1,8 @@
 package com.example.marlace;
 
-import com.example.marlace.filter.AuthFilter;
-import com.example.marlace.model.Category;
-import com.example.marlace.repository.CategoryRepositoryImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.marlace.filters.AuthFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,8 +12,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class MarlaceApplication implements CommandLineRunner {
 
-//	@Autowired
-//	private CategoryRepositoryImpl categoryRepository;
+	private static final Logger log = LoggerFactory.getLogger(MarlaceApplication.class);
 
 	public static void main(String[] args) {
 		SpringApplication.run(MarlaceApplication.class, args);
@@ -31,6 +29,6 @@ public class MarlaceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//		categoryRepository.createCategory(1, "TEst title", "test descoprtopm");
+
 	}
 }
