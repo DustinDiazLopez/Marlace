@@ -1,6 +1,6 @@
 package com.example.marlace.service;
 
-import com.example.marlace.exceptions.EtAuthException;
+import com.example.marlace.exceptions.MarlaceAuthException;
 import com.example.marlace.model.User;
 import com.example.marlace.repository.UserRepository;
 import org.slf4j.Logger;
@@ -21,32 +21,32 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public User validateUser(String email, String password) throws EtAuthException {
+    public User authorizeUser(String email, String password) throws MarlaceAuthException {
         if (email != null) email = email.toLowerCase();
-        else throw new EtAuthException("Email cannot be null");
-        if (password == null) throw new EtAuthException("Password cannot be null");
-        return userRepository.findUserByEmailAndPassword(email, password);
+        else throw new MarlaceAuthException("Email cannot be null");
+        if (password == null) throw new MarlaceAuthException("Password cannot be null");
+        return userRepository.authenticate(email, password);
     }
 
     @Override
-    public User registerUser(String fistName, String lastName, String email, String password) throws EtAuthException {
+    public User registerUser(String fistName, String lastName, String email, String password) throws MarlaceAuthException {
         if (email != null) {
             email = email.toLowerCase();
 
             if (!EMAIL_PATTERN.matcher(email).matches()) {
-                throw new EtAuthException("Invalid email format.");
+                throw new MarlaceAuthException("Invalid email format.");
             }
 
             final Boolean emailExists = userRepository.emailExists(email);
 
             if (emailExists) {
-                throw new EtAuthException("Email already in use.");
+                throw new MarlaceAuthException("Email already in use.");
             }
 
             final Integer userId = userRepository.create(fistName, lastName, email, password);
             return userRepository.findById(userId);
         } else {
-            throw new EtAuthException("Email cannot be null.");
+            throw new MarlaceAuthException("Email cannot be null.");
         }
     }
 }

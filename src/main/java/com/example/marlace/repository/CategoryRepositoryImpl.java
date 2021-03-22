@@ -1,10 +1,8 @@
 package com.example.marlace.repository;
 
-import com.example.marlace.exceptions.EtBadRequestException;
-import com.example.marlace.exceptions.EtResourceNotFoundException;
+import com.example.marlace.exceptions.MarlaceBadRequestException;
+import com.example.marlace.exceptions.MarlaceResourceNotFoundException;
 import com.example.marlace.model.Category;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -34,12 +32,12 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Category> findAll(Integer userId) throws EtResourceNotFoundException {
+    public List<Category> findAll(Integer userId) throws MarlaceResourceNotFoundException {
         return null;
     }
 
     @Override
-    public Category findById(Integer userId, Integer categoryId) throws EtResourceNotFoundException {
+    public Category findById(Integer userId, Integer categoryId) throws MarlaceResourceNotFoundException {
         try {
             return jdbcTemplate.queryForObject(
                     SQL_SELECT_CATEGORY_BY_ID,
@@ -48,12 +46,12 @@ public class CategoryRepositoryImpl implements CategoryRepository {
             );
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EtResourceNotFoundException("The specified category was not found.");
+            throw new MarlaceResourceNotFoundException("The specified category was not found.");
         }
     }
 
     @Override
-    public Integer create(Integer userId, String title, String description) throws EtBadRequestException {
+    public Integer create(Integer userId, String title, String description) throws MarlaceBadRequestException {
         try {
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(connection -> {
@@ -71,12 +69,12 @@ public class CategoryRepositoryImpl implements CategoryRepository {
             return Integer.parseInt(generatedKey);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EtBadRequestException("Invalid request. Failed to create category.");
+            throw new MarlaceBadRequestException("Invalid request. Failed to create category.");
         }
     }
 
     @Override
-    public Integer createCategory(Integer userId, String title, String description) throws EtBadRequestException {
+    public Integer createCategory(Integer userId, String title, String description) throws MarlaceBadRequestException {
 //        Session session;
 //
 //        try {
@@ -93,7 +91,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public void update(Integer userId, Integer categoryId, Category category) throws EtBadRequestException {
+    public void update(Integer userId, Integer categoryId, Category category) throws MarlaceBadRequestException {
 
     }
 

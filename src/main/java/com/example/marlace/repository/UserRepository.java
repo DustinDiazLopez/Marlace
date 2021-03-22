@@ -1,11 +1,14 @@
 package com.example.marlace.repository;
 
-import com.example.marlace.exceptions.EtAuthException;
+import com.example.marlace.exceptions.MarlaceAuthException;
 import com.example.marlace.model.User;
 
 public interface UserRepository {
-    Integer create(String firstName, String lastName, String email, String password) throws EtAuthException;
-    User findUserByEmailAndPassword(String email, String password) throws EtAuthException;
-    Boolean emailExists(String email);
+    Integer create(String firstName, String lastName, String email, String password) throws MarlaceAuthException;
+    Boolean delete(Integer id) throws MarlaceAuthException;
+    Boolean update(Integer id, String firstName, String lastName, String email, String password, String description) throws MarlaceAuthException;
     User findById(Integer id);
+    User findByEmail(String email);
+    User authenticate(String email, String password) throws MarlaceAuthException;
+    Boolean emailExists(String email);
 }
