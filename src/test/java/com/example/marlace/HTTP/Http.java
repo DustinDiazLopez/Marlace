@@ -6,29 +6,35 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Map;
 
 public class Http {
 
-    public static String put(String url, Map<String, String> header, String body, int expectedResponseCode)
-            throws IOException {
-        return request(url, "PUT", header, body, expectedResponseCode);
-    }
-
-    public static String delete(String url, Map<String, String> header, String body, int expectedResponseCode)
-            throws IOException {
-        return request(url, "DELETE", header, body, expectedResponseCode);
-    }
-
-    public static String get(String url, Map<String, String> header, String body, int expectedResponseCode)
-            throws IOException {
-        return request(url, "GET", header, body, expectedResponseCode);
+    public static final class Method {
+        public static final String POST = "POST";
+        public static final String GET = "GET";
+        public static final String PUT = "PUT";
+        public static final String DELETE = "DELETE";
     }
 
     public static String post(String url, Map<String, String> header, String body, int expectedResponseCode)
             throws IOException {
-        return request(url, "POST", header, body, expectedResponseCode);
+        return request(url, Method.POST, header, body, expectedResponseCode);
+    }
+
+    public static String get(String url, Map<String, String> header, String body, int expectedResponseCode)
+            throws IOException {
+        return request(url, Method.GET, header, body, expectedResponseCode);
+    }
+
+    public static String put(String url, Map<String, String> header, String body, int expectedResponseCode)
+            throws IOException {
+        return request(url, Method.PUT, header, body, expectedResponseCode);
+    }
+
+    public static String delete(String url, Map<String, String> header, String body, int expectedResponseCode)
+            throws IOException {
+        return request(url, Method.DELETE, header, body, expectedResponseCode);
     }
 
     public static String request(String url, String requestMethod, Map<String, String> header, String body,

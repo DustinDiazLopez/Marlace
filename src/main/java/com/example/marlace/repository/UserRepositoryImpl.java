@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.List;
 
 @Repository
@@ -50,9 +51,9 @@ public class UserRepositoryImpl implements UserRepository {
 
             if (keyHolder.getKeys() != null) {
                 // TODO: FIX the value is being converted from a a big integer to a string and to a integer
-                final String GENERATED_USER_ID = keyHolder.getKeys().get("GENERATED_KEY").toString();
-                log.info("Created user with id: " + GENERATED_USER_ID);
-                return Integer.parseInt(GENERATED_USER_ID);
+                final String userId = keyHolder.getKeys().get("GENERATED_KEY").toString();
+                log.info("Created user with id: " + userId);
+                return Integer.parseInt(userId);
             } else {
                 throw new MarlaceAuthException("Failed to create the user account.");
             }
@@ -60,8 +61,9 @@ public class UserRepositoryImpl implements UserRepository {
             e.printStackTrace();
 
             if (e instanceof NumberFormatException) {
-                log.error("Failed to convert big integer to int");
-                throw new MarlaceAuthException("Failed to convert string to int.");
+                final String errorMsg = "Failed to convert big integer to int";
+                log.error(errorMsg);
+                throw new MarlaceAuthException(errorMsg);
             }
 
             throw new MarlaceAuthException("Invalid details. Failed to create the user account.");
@@ -136,8 +138,8 @@ public class UserRepositoryImpl implements UserRepository {
     public Boolean emailExists(String email) {
         final List<User> users = jdbcTemplate.query(
                 SQL_SELECT_USER_BY_EMAIL,
-                new Object[]{email},
-                new int[]{},
+                new Object[]{ email },
+                new int[]{ Types.VARCHAR },
                 userRowMapper
         );
 
