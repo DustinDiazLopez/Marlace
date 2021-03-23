@@ -28,6 +28,7 @@ public class UserControllerIntegrationTest {
         object.put("lastName", "Diaz");
         object.put("email", "example@gmail.com");
         object.put("password", "hello_password");
+        final String body = object.toString();
     }
 
 }

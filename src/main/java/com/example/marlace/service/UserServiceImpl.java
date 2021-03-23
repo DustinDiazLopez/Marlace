@@ -1,6 +1,7 @@
 package com.example.marlace.service;
 
 import com.example.marlace.exceptions.MarlaceAuthException;
+import com.example.marlace.exceptions.MarlaceNullParamException;
 import com.example.marlace.model.User;
 import com.example.marlace.repository.UserRepository;
 import org.slf4j.Logger;
@@ -19,6 +20,22 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Override
+    public User findById(Integer id) throws MarlaceNullParamException {
+        if (id == null) {
+            throw new MarlaceNullParamException("'id' cannot be null");
+        }
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public User findByEmail(String email) throws MarlaceNullParamException {
+        if (email == null || email.isEmpty()) {
+            throw new MarlaceNullParamException("'email' cannot be null not empty");
+        }
+        return userRepository.findByEmail(email);
+    }
 
     @Override
     public User authorizeUser(String email, String password) throws MarlaceAuthException {

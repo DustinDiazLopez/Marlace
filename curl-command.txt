@@ -5,7 +5,7 @@ Login:
 curl -X POST -H "Content-Type: application/json" -d '{"email": "dustindiaz@example.com", "password": "hello-password"}' http://localhost:8080/api/u/login
 
 Get Categories:
-curl -X GET -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MTU0MDc1MzIsInVzZXJJZCI6MSwiZW1haWwiOiJkdXN0aW5kaWF6QGV4YW1wbGUuY29tIiwiZmlyc3ROYW1lIjoiRHVzdGluIiwibGFzdE5hbWUiOiJEw61heiJ9.ZDK9KTySX_rOlWf5_RAYFYI1YXE0AExfxs57cSVtX9VKy_OOLTi8pWApsNsWAlZpVHIPhq5gxoJpEgwBl7t3Tg" http://localhost:8080/api/categories
+curl -X GET -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MTY0OTkyMzEsInVzZXJJZCI6MiwiZW1haWwiOiJkdXN0aW5kaWF6QGV4YW1wbGUuY29tIiwiZmlyc3ROYW1lIjoiRHVzdGluIiwibGFzdE5hbWUiOiJEw61heiJ9.pxPwBn-qhVapJ9W5NNTL5W-L5uCVfm8xjSg9RW43fig81z2tpMnmlTTRdgCuPLBBWK84xMoJhLCDarARnlpXww" http://localhost:8080/api/categories
 
 Create a Category (not working):
 curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MTU0MDc1MzIsInVzZXJJZCI6MSwiZW1haWwiOiJkdXN0aW5kaWF6QGV4YW1wbGUuY29tIiwiZmlyc3ROYW1lIjoiRHVzdGluIiwibGFzdE5hbWUiOiJEw61heiJ9.ZDK9KTySX_rOlWf5_RAYFYI1YXE0AExfxs57cSVtX9VKy_OOLTi8pWApsNsWAlZpVHIPhq5gxoJpEgwBl7t3Tg" -d '{"title": "example 1", "description": "this is a description "}' http://localhost:8080/api/categories

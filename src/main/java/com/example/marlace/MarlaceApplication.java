@@ -24,6 +24,9 @@ public class MarlaceApplication implements CommandLineRunner {
 		AuthFilter authFilter = new AuthFilter();
 		registrationBean.setFilter(authFilter);
 		registrationBean.addUrlPatterns("/api/categories/*");
+		registrationBean.addUrlPatterns("/api/u/delete");
+		registrationBean.addUrlPatterns("/api/u/update");
+		registrationBean.addUrlPatterns("/api/u");
 		return registrationBean;
 	}
 
