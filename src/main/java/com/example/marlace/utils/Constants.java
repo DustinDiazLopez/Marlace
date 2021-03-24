@@ -3,6 +3,16 @@ package com.example.marlace.utils;
 import java.util.regex.Pattern;
 
 public final class Constants {
+
+    public static final String APPLICATION_JSON = "application/json";
+
+    public static final String[] URL_PATTERNS = new String[]{
+            "/api/categories/*",
+            "/api/u/delete",
+            "/api/u/update",
+            "/api/u",
+    };
+
     public static final class JWT {
         public static final String JWT_SECRET_KEY = "(Vo?gKV@qwQ\"HKi4;A)&{%Ftw'u-vgY\\(5";
         public static final long TOKEN_DURATION = 1000 * 60 * 60 * 2; // 2 hours

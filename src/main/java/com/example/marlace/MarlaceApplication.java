@@ -1,6 +1,7 @@
 package com.example.marlace;
 
 import com.example.marlace.filters.AuthFilter;
+import com.example.marlace.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -23,10 +24,10 @@ public class MarlaceApplication implements CommandLineRunner {
 		FilterRegistrationBean<AuthFilter> registrationBean = new FilterRegistrationBean<>();
 		AuthFilter authFilter = new AuthFilter();
 		registrationBean.setFilter(authFilter);
-		registrationBean.addUrlPatterns("/api/categories/*");
-		registrationBean.addUrlPatterns("/api/u/delete");
-		registrationBean.addUrlPatterns("/api/u/update");
-		registrationBean.addUrlPatterns("/api/u");
+		for (final String url : Constants.URL_PATTERNS) {
+			log.info(String.format("Adding url pattern: '%s'", url));
+			registrationBean.addUrlPatterns(url);
+		}
 		return registrationBean;
 	}
 

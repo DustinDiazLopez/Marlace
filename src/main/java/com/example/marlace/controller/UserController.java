@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.marlace.utils.Constants.APPLICATION_JSON;
 import static com.example.marlace.utils.Utils.generateJWTToken;
 
 @RestController
@@ -20,51 +21,49 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    private final String applicationJSON = "application/json";
-
-    @GetMapping(consumes = applicationJSON, produces = applicationJSON)
+    @GetMapping(consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
     public ResponseEntity<User> getAuthenticatedUser(HttpServletRequest request) {
         final Integer userId = (Integer) request.getAttribute("userId");
         final User user = userService.findById(userId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/login", consumes = applicationJSON, produces = applicationJSON)
-    public ResponseEntity<Map<String, String>> loginUser(@RequestBody Map<String, Object> userMap) {
-        final String email = (String) userMap.get("email");
-        final String password = (String) userMap.get("password");
+    @PostMapping(path = "/login", consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
+    public ResponseEntity<Map<String, String>> loginUser(@RequestBody Map<String, Object> requestBody) {
+        final String email = (String) requestBody.get("email");
+        final String password = (String) requestBody.get("password");
         final User user = userService.authorizeUser(email, password);
         return new ResponseEntity<>(generateJWTToken(user), HttpStatus.OK);
     }
 
-    @PostMapping(path = "/register", consumes = applicationJSON, produces = applicationJSON)
-    public ResponseEntity<Map<String, String>> registerUser(@RequestBody Map<String, Object> userMap) {
-        final String firstName = (String) userMap.get("firstName");
-        final String lastName = (String) userMap.get("lastName");
-        final String email = (String) userMap.get("email");
-        final String password = (String) userMap.get("password");
+    @PostMapping(path = "/register", consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
+    public ResponseEntity<Map<String, String>> registerUser(@RequestBody Map<String, Object> requestBody) {
+        final String firstName = (String) requestBody.get("firstName");
+        final String lastName = (String) requestBody.get("lastName");
+        final String email = (String) requestBody.get("email");
+        final String password = (String) requestBody.get("password");
         final User user = userService.registerUser(firstName, lastName, email, password);
         return new ResponseEntity<>(generateJWTToken(user), HttpStatus.CREATED);
     }
 
-    @DeleteMapping(path = "/delete", consumes = applicationJSON, produces = applicationJSON)
+    @DeleteMapping(path = "/delete", consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> deleteUser(HttpServletRequest request,
-                                                          @RequestBody Map<String, Object> body) {
+                                                          @RequestBody Map<String, Object> requestBody) {
         final Integer userId = (Integer) request.getAttribute("userId");
         Map<String, Object> map = new HashMap<>();
         map.put("request", request);
-        map.put("body", body);
+        map.put("body", requestBody);
         return new ResponseEntity<>(map, HttpStatus.NOT_IMPLEMENTED);
     }
 
-    @PutMapping(path = "/update", consumes = applicationJSON, produces = applicationJSON)
+    @PutMapping(path = "/update", consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> updatedUser(HttpServletRequest request,
-                                                          @RequestBody Map<String, Object> body) {
+                                                           @RequestBody Map<String, Object> requestBody) {
         final Integer userId = (Integer) request.getAttribute("userId");
         System.err.println(userId);
         Map<String, Object> map = new HashMap<>();
         map.put("request", request);
-        map.put("body", body);
+        map.put("body", requestBody);
         return new ResponseEntity<>(map, HttpStatus.NOT_IMPLEMENTED);
     }
 }

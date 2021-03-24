@@ -1,2 +1,2 @@
 # marlace
- A marketplace API
+ An ITS API
