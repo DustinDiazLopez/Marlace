@@ -4,7 +4,6 @@ import com.example.marlace.exceptions.MarlaceAuthException;
 import com.example.marlace.models.User;
 import com.example.marlace.repositories.mappers.UserRowMapper;
 import com.example.marlace.utilities.Utils;
-import com.sun.istack.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +71,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Boolean delete(@NotNull Integer id) {
+    public Boolean delete(Integer id) {
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(SQL_DELETE_USER_BY_ID);
             int paramIndex = 0;
@@ -87,7 +86,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Boolean update(@NotNull Integer id, String firstName, String lastName, String email, String password,
+    public Boolean update(Integer id, String firstName, String lastName, String email, String password,
                           String description) throws MarlaceAuthException {
         if (id == null) {
             throw new MarlaceAuthException("id cannot be null");
@@ -153,17 +152,17 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findById(@NotNull Integer userId) {
+    public User findById(Integer userId) {
         return jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_ID, userRowMapper, userId);
     }
 
     @Override
-    public User findByEmail(@NotNull String email) {
+    public User findByEmail(String email) {
         return jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_EMAIL, userRowMapper, email);
     }
 
     @Override
-    public User authenticate(@NotNull String email, @NotNull String password) throws MarlaceAuthException {
+    public User authenticate(String email, String password) throws MarlaceAuthException {
         try {
             final User user = this.findByEmail(email);
 
@@ -178,7 +177,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Boolean emailExists(@NotNull String email) {
+    public Boolean emailExists(String email) {
         final List<User> users = jdbcTemplate.query(
                 SQL_SELECT_USER_BY_EMAIL,
                 new Object[]{email},

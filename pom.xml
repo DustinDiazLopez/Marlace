@@ -12,7 +12,7 @@
 	<artifactId>marlace</artifactId>
 	<version>0.0.1</version>
 	<name>marlace</name>
-	<description>A marketplace API</description>
+	<description>An ITS API</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -20,6 +20,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>30.1-jre</version>
 		</dependency>
 
 		<dependency>
@@ -34,8 +40,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.4</version>
 		</dependency>
 
 		<!-- jwt start -->
@@ -53,23 +60,10 @@
 		<!-- jwt end -->
 
 		<dependency>
-			<groupId>org.mindrot</groupId>
-			<artifactId>jbcrypt</artifactId>
-			<version>0.4</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
-		</dependency>
-
-		<!-- not used -->
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>30.1-jre</version>
 		</dependency>
 
 		<!-- Testing -->
