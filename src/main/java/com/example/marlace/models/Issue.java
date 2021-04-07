@@ -4,16 +4,18 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Data
-public class Issue {
+@Table(name = "issues")
+public @Data
+class Issue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer issueId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "projectId", referencedColumnName = "projectId")
+    @ManyToOne
     private Project project;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -24,13 +26,21 @@ public class Issue {
     @JoinColumn(name = "createdBy", referencedColumnName = "userId")
     private User createdBy;
 
-//    @ManyToOne
-//    @JoinColumn(name = "comments")
-//    private Set<Comment> comments;
+    @OneToMany(mappedBy = "issue")
+    private List<Comment> comments = new ArrayList<>();
 
+    @Column
     private String title;
+
+    @Column
     private String body;
+
+    @Column
     private Boolean resolved;
+
+    @Column
     private Timestamp createdAt;
+
+    @Column
     private Timestamp updatedAt;
 }

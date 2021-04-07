@@ -2,19 +2,23 @@ package com.example.marlace.models;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Data
-public class Role {
+@Table
+public @Data
+class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer roleId;
+
+    @Column
     private String title;
+
+    @Column
     private Timestamp createdAt;
+
+    @Column
     private Timestamp updatedAt;
 }

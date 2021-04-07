@@ -3,10 +3,9 @@ package com.example.marlace.repositories;
 import com.example.marlace.exceptions.MarlaceAuthException;
 import com.example.marlace.models.User;
 import com.example.marlace.repositories.mappers.UserRowMapper;
+import com.example.marlace.utilities.DB;
 import com.example.marlace.utilities.Utils;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +38,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void example(Object... objects) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        for (Object obj : objects) session.save(obj);
-        transaction.commit();
-    }
+    private final DB database = new DB(sessionFactory);
 
     @Override
     public Integer create(String firstName, String lastName, String email, String password) throws MarlaceAuthException {

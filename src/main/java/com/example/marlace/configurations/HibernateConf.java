@@ -1,5 +1,8 @@
 package com.example.marlace.configurations;
 
+import com.example.marlace.models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +20,8 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class HibernateConf {
 
+    private static final Logger log = LoggerFactory.getLogger(HibernateConf.class);
+
     @Autowired
     private Environment env;
 
@@ -24,7 +29,8 @@ public class HibernateConf {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(getDataSource());
-        sessionFactory.setPackagesToScan("com.example.marlace.models");
+        log.info(String.format("Scanning for entities in '%s'", User.class.getPackage()));
+        sessionFactory.setPackagesToScan(User.class.getPackage().getName());
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
@@ -48,9 +54,8 @@ public class HibernateConf {
 
     private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-        hibernateProperties.setProperty("hibernate.generate_statistics", "true");
+        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
+        hibernateProperties.setProperty("hibernate.show_sql", "true");
         return hibernateProperties;
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class MarlaceApplication implements CommandLineRunner {
 
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private static final Logger log = LoggerFactory.getLogger(MarlaceApplication.class);
 
 	public static void main(String[] args) {
 		SpringApplication.run(MarlaceApplication.class, args);

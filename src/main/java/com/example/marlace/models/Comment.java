@@ -5,27 +5,40 @@ import lombok.Data;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Data
-public class Comment {
+@Entity
+@Table
+public @Data
+class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer commentId;
 
-    @JoinColumn(name = "issueId", referencedColumnName = "issueId")
+    @ManyToOne
     private Issue issue;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "createdBy", referencedColumnName = "userId")
+    @JoinColumn(referencedColumnName = "userId")
     private User createdBy;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "repliedTo", referencedColumnName = "commentId")
-    private Comment repliedTo;
+    @JoinColumn(referencedColumnName = "commentId")
+    private Comment repliedTo = null;
 
+    @Column
     private String comment;
-    private Boolean hasReplies;
-    private Integer likes;
-    private Integer dislikes;
+
+    @Column
+    private Boolean hasReplies = Boolean.FALSE;
+
+    @Column
+    private Integer likes = 0;
+
+    @Column
+    private Integer dislikes = 0;
+
+    @Column
     private Timestamp createdAt;
+
+    @Column
     private Timestamp updatedAt;
 }

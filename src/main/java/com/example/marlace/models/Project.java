@@ -2,23 +2,34 @@ package com.example.marlace.models;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
-@Data
-public class Project {
+@Table
+public @Data
+class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer projectId;
+
+    @Column
     private String title;
+
+    @Column
     private String description;
-    //    private Set<Issue> issues;
+
+    @OneToMany(mappedBy = "project")
+    private List<Issue> issues;
 //    private Set<Tag> tags;
-//    private Set<User> users;
+
+    @ManyToMany
+    private List<User> users;
+
+    @Column
     private Timestamp createdAt;
+
+    @Column
     private Timestamp updatedAt;
 }
