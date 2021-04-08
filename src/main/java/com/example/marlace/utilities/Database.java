@@ -55,7 +55,7 @@ public class Database {
         return serializables.size() == 1 && ((TransactionStatus) serializables.get(0)).isNotOneOf(TransactionStatus.FAILED_COMMIT);
     }
 
-    public static Object get(final SessionFactory sessionFactory, Class cls, Integer id) {
+    public static Object get(final SessionFactory sessionFactory, Class<?> cls, Integer id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         final Object object = session.get(cls, id);
@@ -104,7 +104,6 @@ public class Database {
                 break;
             default:
                 log.error(option + " is not a valid Database Transaction Option");
-
                 ids.add(TransactionStatus.FAILED_COMMIT);
                 return ids;
         }

@@ -14,7 +14,7 @@ class Role {
     private Integer roleId;
 
     @Column
-    private String title;
+    private String role;
 
     @Column
     private Timestamp createdAt;

@@ -22,7 +22,6 @@ class Project {
 
     @OneToMany(mappedBy = "project")
     private List<Issue> issues;
-//    private Set<Tag> tags;
 
     @ManyToMany
     private List<User> users;
