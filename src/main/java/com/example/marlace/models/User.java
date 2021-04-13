@@ -1,9 +1,9 @@
 package com.example.marlace.models;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -12,33 +12,29 @@ public @Data
 class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
-    @Column
+    @Column(length = 128)
     private String firstName;
 
-    @Column
+    @Column(length = 128)
     private String lastName;
 
     @ManyToMany(mappedBy = "users")
     private List<Project> projects;
 
-    @Column(unique = true)
+    @Column(length = 384, unique = true)
     private String email;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String password;
 
-    @Column
+    @Column(length = 1024)
     private String description;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String profileImageUrl;
 
-    @Column
-    private Timestamp createdAt;
-
-    @Column
-    private Timestamp updatedAt;
+    private EmbeddedEntityMetadata embeddedEntityMetadata;
 }

@@ -3,7 +3,6 @@ package com.example.marlace.models;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
 public @Data
 class Issue {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer issueId;
 
     @ManyToOne
@@ -29,18 +28,14 @@ class Issue {
     @OneToMany(mappedBy = "issue")
     private List<Comment> comments = new ArrayList<>();
 
-    @Column
+    @Column(length = 64)
     private String title;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String body;
 
     @Column
-    private Boolean resolved;
+    private Boolean resolved = Boolean.FALSE;
 
-    @Column
-    private Timestamp createdAt;
-
-    @Column
-    private Timestamp updatedAt;
+    private EmbeddedEntityMetadata embeddedEntityMetadata;
 }

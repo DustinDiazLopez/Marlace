@@ -3,7 +3,6 @@ package com.example.marlace.models;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -11,7 +10,7 @@ import java.util.List;
 public @Data
 class Project {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer projectId;
 
     @Column
@@ -26,9 +25,5 @@ class Project {
     @ManyToMany
     private List<User> users;
 
-    @Column
-    private Timestamp createdAt;
-
-    @Column
-    private Timestamp updatedAt;
+    private EmbeddedEntityMetadata embeddedEntityMetadata;
 }

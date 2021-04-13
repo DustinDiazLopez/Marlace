@@ -3,14 +3,13 @@ package com.example.marlace.models;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 @Table
 public @Data
 class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer commentId;
 
     @ManyToOne
@@ -24,7 +23,7 @@ class Comment {
     @JoinColumn(referencedColumnName = "commentId")
     private Comment repliedTo = null;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String comment;
 
     @Column
@@ -36,9 +35,5 @@ class Comment {
     @Column
     private Integer dislikes = 0;
 
-    @Column
-    private Timestamp createdAt;
-
-    @Column
-    private Timestamp updatedAt;
+    private EmbeddedEntityMetadata embeddedEntityMetadata;
 }
