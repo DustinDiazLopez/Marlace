@@ -1,5 +1,6 @@
 package com.example.marlace.models;
 
+import com.example.marlace.utilities.Constants;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,7 +24,7 @@ class Comment {
     @JoinColumn(referencedColumnName = "commentId")
     private Comment repliedTo = null;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = Constants.ColumnDefinitions.TEXT)
     private String comment;
 
     @Column

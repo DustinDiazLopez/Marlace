@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -20,10 +21,10 @@ class Project {
     private String description;
 
     @OneToMany(mappedBy = "project")
-    private List<Issue> issues;
+    private Set<Issue> issues;
 
     @ManyToMany
-    private List<User> users;
+    private Set<User> users;
 
     private EmbeddedEntityMetadata embeddedEntityMetadata;
 }

@@ -1,10 +1,13 @@
 package com.example.marlace.models;
 
+import com.example.marlace.utilities.Constants;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -22,18 +25,18 @@ class User {
     private String lastName;
 
     @ManyToMany(mappedBy = "users")
-    private List<Project> projects;
+    private Set<Project> projects;
 
     @Column(length = 384, unique = true)
     private String email;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = Constants.ColumnDefinitions.TEXT)
     private String password;
 
     @Column(length = 1024)
     private String description;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = Constants.ColumnDefinitions.TEXT)
     private String profileImageUrl;
 
     private EmbeddedEntityMetadata embeddedEntityMetadata;

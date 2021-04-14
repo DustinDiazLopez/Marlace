@@ -1,5 +1,6 @@
 package com.example.marlace.models;
 
+import com.example.marlace.utilities.Constants;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -11,13 +12,13 @@ public @Data
 class EmbeddedEntityMetadata {
     @Column(
             updatable = false,
-            columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+            columnDefinition = Constants.ColumnDefinitions.ON_CREATE_TIMESTAMP
     )
     private Timestamp createdAt;
 
     @Column(
             updatable = false,
-            columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+            columnDefinition = Constants.ColumnDefinitions.ON_UPDATE_TIMESTAMP
     )
     private Timestamp updatedAt;
 }

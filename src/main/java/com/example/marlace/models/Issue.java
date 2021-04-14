@@ -1,10 +1,13 @@
 package com.example.marlace.models;
 
+import com.example.marlace.utilities.Constants;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "issues")
@@ -26,12 +29,12 @@ class Issue {
     private User createdBy;
 
     @OneToMany(mappedBy = "issue")
-    private List<Comment> comments = new ArrayList<>();
+    private Set<Comment> comments;
 
     @Column(length = 64)
     private String title;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = Constants.ColumnDefinitions.TEXT)
     private String body;
 
     @Column
