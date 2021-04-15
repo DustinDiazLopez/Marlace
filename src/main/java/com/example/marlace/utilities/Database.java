@@ -55,10 +55,10 @@ public class Database {
         return serializables.size() == 1 && ((TransactionStatus) serializables.get(0)).isNotOneOf(TransactionStatus.FAILED_COMMIT);
     }
 
-    public static Object get(final SessionFactory sessionFactory, Class<?> cls, Integer id) {
+    public static <T> T get(final SessionFactory sessionFactory, final Class<T> cls, final Serializable id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        final Object object = session.get(cls, id);
+        final T object = session.get(cls, id);
         transaction.commit();
         return object;
     }
@@ -77,6 +77,7 @@ public class Database {
      * @param objects        the objects to persist
      * @return if save: returns a list of ids
      * if saveOrUpdate or persist: returns a list with the transaction status
+     * @see
      */
     public static List<Serializable> storeObjectToDatabase(
             final SessionFactory sessionFactory,
