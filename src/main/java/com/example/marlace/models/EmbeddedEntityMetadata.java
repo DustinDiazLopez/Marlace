@@ -10,14 +10,17 @@ import java.sql.Timestamp;
 @Embeddable
 public @Data
 class EmbeddedEntityMetadata {
+
     @Column(
             updatable = false,
+            insertable = false,
             columnDefinition = Constants.ColumnDefinitions.ON_CREATE_TIMESTAMP
     )
     private Timestamp createdAt;
 
     @Column(
             updatable = false,
+            insertable = false,
             columnDefinition = Constants.ColumnDefinitions.ON_UPDATE_TIMESTAMP
     )
     private Timestamp updatedAt;
