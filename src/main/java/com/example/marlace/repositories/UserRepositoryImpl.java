@@ -4,6 +4,7 @@ import com.example.marlace.exceptions.MarlaceAuthException;
 import com.example.marlace.models.User;
 import com.example.marlace.repositories.mappers.UserRowMapper;
 import com.example.marlace.utilities.DB;
+import com.example.marlace.utilities.Database;
 import com.example.marlace.utilities.Utils;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManagerFactory;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Types;
@@ -23,11 +25,11 @@ import java.util.List;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
-    private static final String SQL_INSERT_USER = "INSERT INTO `users`(`first_name`, `last_name`, `email`, `password`) VALUES (?, ?, ?, ?)";
-    private static final String SQL_SELECT_USER_BY_ID = "SELECT * FROM `users` WHERE `user_id` = ?";
-    private static final String SQL_SELECT_USER_BY_EMAIL = "SELECT * FROM `users` WHERE `email` = ?";
-    private static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE user_id = ?";
-    private static final String SQL_UPDATE_USER_BY_ID = "UPDATE users SET `first_name` = ?, `last_name` = ?, `email` = ?, `password` = ?, `description` = ? WHERE user_id = ?";
+    private static final String SQL_INSERT_USER = "INSERT INTO `user`(`firstName`, `lastName`, `email`, `password`) VALUES (?, ?, ?, ?)";
+    private static final String SQL_SELECT_USER_BY_ID = "SELECT * FROM `user` WHERE `userId` = ?";
+    private static final String SQL_SELECT_USER_BY_EMAIL = "SELECT * FROM `user` WHERE `email` = ?";
+    private static final String SQL_DELETE_USER_BY_ID = "DELETE FROM `user` WHERE userId = ?";
+    private static final String SQL_UPDATE_USER_BY_ID = "UPDATE `user` SET `firstName` = ?, `lastName` = ?, `email` = ?, `password` = ?, `description` = ? WHERE userId = ?";
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final UserRowMapper userRowMapper = new UserRowMapper();
@@ -35,8 +37,15 @@ public class UserRepositoryImpl implements UserRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    @Autowired
     private SessionFactory sessionFactory;
+
+    @Autowired
+    public UserRepositoryImpl(EntityManagerFactory factory) {
+        if (factory.unwrap(SessionFactory.class) == null) {
+            throw new NullPointerException("factory is not a hibernate factory");
+        }
+        this.sessionFactory = factory.unwrap(SessionFactory.class);
+    }
 
     private final DB database = new DB(sessionFactory);
 
@@ -160,7 +169,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findById(Integer userId) {
-        return jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_ID, userRowMapper, userId);
+        return Database.get(sessionFactory, User.class, userId);
     }
 
     @Override

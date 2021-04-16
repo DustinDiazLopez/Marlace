@@ -39,8 +39,15 @@ public class Database {
      * @return whether the commit to the database was successful.
      */
     public static boolean saveOrUpdate(final SessionFactory sessionFactory, final Object... objects) {
-        List<Serializable> serializables = storeObjectToDatabase(sessionFactory, TransactionOption.SAVE_OR_UPDATE, objects);
-        return serializables.size() == 1 && ((TransactionStatus) serializables.get(0)).isNotOneOf(TransactionStatus.FAILED_COMMIT);
+        final List<Serializable> serializables = storeObjectToDatabase(
+                sessionFactory,
+                TransactionOption.SAVE_OR_UPDATE,
+                objects
+        );
+        return serializables.size() == 1 &&
+                ((TransactionStatus) serializables.get(0)).isNotOneOf(
+                        TransactionStatus.FAILED_COMMIT
+                );
     }
 
     /**
@@ -51,22 +58,30 @@ public class Database {
      * @return whether the commit to the database was successful.
      */
     public static boolean persist(final SessionFactory sessionFactory, final Object... objects) {
-        List<Serializable> serializables = storeObjectToDatabase(sessionFactory, TransactionOption.PERSIST, objects);
-        return serializables.size() == 1 && ((TransactionStatus) serializables.get(0)).isNotOneOf(TransactionStatus.FAILED_COMMIT);
+        final List<Serializable> serializables = storeObjectToDatabase(
+                sessionFactory,
+                TransactionOption.PERSIST,
+                objects
+        );
+        return serializables.size() == 1 &&
+                ((TransactionStatus) serializables.get(0)).isNotOneOf(
+                        TransactionStatus.FAILED_COMMIT
+                );
     }
 
     public static <T> T get(final SessionFactory sessionFactory, final Class<T> cls, final Serializable id) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        System.err.println(sessionFactory);
+        final Session session = sessionFactory.openSession();
+        final Transaction transaction = session.beginTransaction();
         final T object = session.get(cls, id);
         transaction.commit();
         return object;
     }
 
     public static boolean delete(final SessionFactory sessionFactory, final Object... objects) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        for (Object obj : objects) session.delete(obj);
+        final Session session = sessionFactory.openSession();
+        final Transaction transaction = session.beginTransaction();
+        for (final Object obj : objects) session.delete(obj);
         transaction.commit();
         return transaction.getStatus().isNotOneOf(TransactionStatus.FAILED_COMMIT);
     }
@@ -84,22 +99,22 @@ public class Database {
             final TransactionOption option,
             final Object... objects
     ) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        List<Serializable> ids = new ArrayList<>(objects.length);
+        final Session session = sessionFactory.openSession();
+        final Transaction transaction = session.beginTransaction();
+        final List<Serializable> ids = new ArrayList<>(objects.length);
         switch (option) {
             case SAVE:
-                for (Object obj : objects) {
+                for (final Object obj : objects) {
                     ids.add(session.save(obj));
                 }
                 break;
             case SAVE_OR_UPDATE:
-                for (Object obj : objects) {
+                for (final Object obj : objects) {
                     session.saveOrUpdate(obj);
                 }
                 break;
             case PERSIST:
-                for (Object obj : objects) {
+                for (final Object obj : objects) {
                     session.persist(obj);
                 }
                 break;

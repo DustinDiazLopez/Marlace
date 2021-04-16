@@ -2,6 +2,7 @@ package com.example.marlace.utilities;
 
 import org.hibernate.SessionFactory;
 
+import javax.xml.crypto.Data;
 import java.io.Serializable;
 import java.util.List;
 
@@ -35,5 +36,9 @@ public class DB {
      */
     public boolean persist(final Object... objects) {
         return Database.persist(this.sessionFactory, objects);
+    }
+
+    public <T> T get(final Class<T> cls, final Serializable id) {
+        return Database.get(this.sessionFactory, cls, id);
     }
 }

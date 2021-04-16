@@ -25,7 +25,7 @@ class User {
     private String lastName;
 
     @ManyToMany(mappedBy = "users")
-    private Set<Project> projects;
+    private Set<Project> projects = new HashSet<>();
 
     @Column(length = 384, unique = true)
     private String email;
@@ -39,5 +39,5 @@ class User {
     @Column(columnDefinition = Constants.ColumnDefinitions.TEXT)
     private String profileImageUrl;
 
-    private EmbeddedEntityMetadata embeddedEntityMetadata;
+    private EmbeddedEntityMetadata embeddedEntityMetadata = new EmbeddedEntityMetadata();
 }

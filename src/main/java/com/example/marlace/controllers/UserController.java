@@ -2,6 +2,7 @@ package com.example.marlace.controllers;
 
 import com.example.marlace.models.User;
 import com.example.marlace.services.UserService;
+import com.example.marlace.utilities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,12 @@ public class UserController {
     public ResponseEntity<User> getAuthenticatedUser(HttpServletRequest request) {
         final Integer authUserId = (Integer) request.getAttribute("userId");
         final User user = userService.findById(authUserId);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/2", produces = APPLICATION_JSON)
+    public ResponseEntity<User> test() {
+        final User user = userService.findById(2);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

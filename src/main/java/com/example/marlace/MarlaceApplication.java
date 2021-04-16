@@ -1,12 +1,15 @@
 package com.example.marlace;
 
 import com.example.marlace.filters.AuthFilter;
+import com.example.marlace.services.UserService;
 import com.example.marlace.utilities.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
@@ -14,10 +17,14 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.LinkedList;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
 public class MarlaceApplication implements CommandLineRunner {
 
 	private static final Logger log = LoggerFactory.getLogger(MarlaceApplication.class);
+
+	@Autowired
+	private UserService userService;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(MarlaceApplication.class, args);
