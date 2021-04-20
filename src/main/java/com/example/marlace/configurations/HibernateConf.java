@@ -37,7 +37,7 @@ public class HibernateConf {
 
     @Bean
     public DataSource getDataSource() {
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.url(env.getProperty("spring.datasource.url"));
         dataSourceBuilder.driverClassName(env.getProperty("spring.datasource.driverClassName"));
         dataSourceBuilder.username(env.getProperty("marlace.db.user"));

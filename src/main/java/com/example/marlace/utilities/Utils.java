@@ -92,4 +92,8 @@ public class Utils {
     public static boolean isNullOrEmpty(String str) {
         return nullOrEmpty(str) == null;
     }
+
+    public static String censorEmail(final String email) {
+        return email.charAt(0) + "***" + email.substring(email.indexOf('@') - 1);
+    }
 }

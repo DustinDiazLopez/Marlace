@@ -1,12 +1,11 @@
 package com.example.marlace.models;
 
 import com.example.marlace.utilities.Constants;
+import com.example.marlace.utilities.Utils;
 import lombok.Data;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -40,4 +39,9 @@ class User {
     private String profileImageUrl;
 
     private EmbeddedEntityMetadata embeddedEntityMetadata = new EmbeddedEntityMetadata();
+
+    public void censor() {
+        this.setPassword(null);
+        this.setEmail(Utils.censorEmail(this.getEmail()));
+    }
 }
