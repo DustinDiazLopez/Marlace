@@ -20,7 +20,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class HibernateConf {
 
-    private static final Logger log = LoggerFactory.getLogger(HibernateConf.class);
+    private static final Logger logger = LoggerFactory.getLogger(HibernateConf.class);
 
     @Autowired
     private Environment env;
@@ -29,7 +29,7 @@ public class HibernateConf {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(getDataSource());
-        log.info(String.format("Scanning for entities in '%s'", User.class.getPackage()));
+        logger.info(String.format("Scanning for entities in '%s'", User.class.getPackage()));
         sessionFactory.setPackagesToScan(User.class.getPackage().getName());
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
@@ -42,12 +42,14 @@ public class HibernateConf {
         dataSourceBuilder.driverClassName(env.getProperty("spring.datasource.driverClassName"));
         dataSourceBuilder.username(env.getProperty("marlace.db.user"));
         dataSourceBuilder.password(env.getProperty("marlace.db.password"));
+        logger.info("Building data source...");
         return dataSourceBuilder.build();
     }
 
     @Bean
     public PlatformTransactionManager hibernateTransactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+        logger.info("Setting session factory");
         transactionManager.setSessionFactory(sessionFactory().getObject());
         return transactionManager;
     }
@@ -56,6 +58,7 @@ public class HibernateConf {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
         hibernateProperties.setProperty("hibernate.show_sql", "true");
+        logger.info(hibernateProperties.toString());
         return hibernateProperties;
     }
 }
