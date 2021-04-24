@@ -3,7 +3,7 @@ package com.example.marlace.repositories;
 import com.example.marlace.exceptions.MarlaceAuthException;
 import com.example.marlace.models.User;
 import com.example.marlace.repositories.mappers.UserRowMapper;
-import com.example.marlace.utilities.Database;
+import com.example.marlace.utilities.HibernateWrapper;
 import com.example.marlace.utilities.Utils;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -47,24 +47,24 @@ public class UserRepositoryImpl implements UserRepository {
         user.setLastName(lastName);
         user.setEmail(email);
         user.setPassword(hashedPassword);
-        return (Integer) Database.saveOne(sessionFactory, user);
+        return (Integer) HibernateWrapper.saveOne(sessionFactory, user);
     }
 
     @Override
     public Boolean delete(final Integer id) {
         final User user = new User();
         user.setUserId(id);
-        return Database.delete(sessionFactory, user);
+        return HibernateWrapper.delete(sessionFactory, user);
     }
 
     @Override
     public Boolean update(final User user) throws MarlaceAuthException {
-        return Database.saveOrUpdate(sessionFactory, user);
+        return HibernateWrapper.saveOrUpdate(sessionFactory, user);
     }
 
     @Override
     public User findById(final Integer userId) {
-        return Database.get(sessionFactory, User.class, userId);
+        return HibernateWrapper.get(sessionFactory, User.class, userId);
     }
 
     @Override
