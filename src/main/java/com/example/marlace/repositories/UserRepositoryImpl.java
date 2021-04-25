@@ -64,7 +64,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findById(final Integer userId) {
-        return HibernateWrapper.get(sessionFactory, User.class, userId);
+        return HibernateWrapper.get(sessionFactory, User.class, userId).get(0);
     }
 
     @Override

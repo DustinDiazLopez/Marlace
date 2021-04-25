@@ -5,7 +5,6 @@ import com.example.marlace.models.User;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalUnit;
 import java.util.regex.Pattern;
 
 public final class Constants {
@@ -29,7 +28,7 @@ public final class Constants {
 
     public static final class JWT {
         public static final String JWT_SECRET_KEY = "(Vo?gKV@qwQ\"HKi4;A)&{%Ftw'u-vgY\\(5";
-        public static final long TOKEN_DURATION = 1000 * 60 * 60 * 2; // 2 hours
+        public static final long TOKEN_DURATION = 1000 * 60 * 60 * 24; // 1 day
     }
 
     public static final class Patterns {
@@ -42,7 +41,7 @@ public final class Constants {
             user.setFirstName("Dustin");
             user.setLastName("Díaz");
             user.setEmail("hi.dustin.diaz@gmail.com");
-            user.setPassword(Utils.hashPassword("password"));
+            user.setPassword(Utils.hashPassword("hello_password"));
             user.setDescription("This is Dustin's description");
             EmbeddedEntityMetadata metadata = new EmbeddedEntityMetadata();
             metadata.setCreatedAt(Timestamp.valueOf(LocalDateTime.now().minusDays(50)));

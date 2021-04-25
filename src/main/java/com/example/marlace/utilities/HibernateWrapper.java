@@ -112,18 +112,20 @@ public class HibernateWrapper {
      *
      * @param sessionFactory hibernate session factory
      * @param cls            the class of the object
-     * @param id             the serializable id of the object
+     * @param ids            the ids of the objects in the database
      * @param <T>            the type of the object to be returned object (interpreted from the <b>cls param</b>)
      * @return the object that matches the id
      * @see Session#get(Class, Serializable)
      */
-    public static <T> T get(final SessionFactory sessionFactory, final Class<T> cls, final Serializable id) {
-        System.err.println(sessionFactory);
+    public static <T> List<T> get(final SessionFactory sessionFactory, final Class<T> cls, final Serializable... ids) {
         final Session session = sessionFactory.openSession();
         final Transaction transaction = session.beginTransaction();
-        final T object = session.get(cls, id);
+        final List<T> objects = new ArrayList<>(ids.length);
+        for (final Serializable id : ids) {
+            objects.add(session.get(cls, id));
+        }
         transaction.commit();
-        return object;
+        return objects;
     }
 
     /**
@@ -147,7 +149,7 @@ public class HibernateWrapper {
      * Stores an object:
      * {@link HibernateWrapper#save(SessionFactory, Object...)},
      * {@link HibernateWrapper#saveOrUpdate(SessionFactory, Object...)}, and
-     * {@link HibernateWrapper#persist(SessionFactory, Object...)}
+     * {@link HibernateWrapper#persist(SessionFactory, Object...)}.
      *
      * @param sessionFactory hibernate session
      * @param option         {@link TransactionOption} whether to save, saveOrUpdate, or persist
