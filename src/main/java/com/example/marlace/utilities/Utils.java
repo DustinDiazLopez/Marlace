@@ -62,38 +62,7 @@ public class Utils {
      * @return returns whether the inputted text matches the email pattern
      * @see Constants.Patterns#EMAIL_PATTERN
      */
-    public static boolean matchesEmail(String email) {
+    public static boolean matchesEmail(final String email) {
         return EMAIL_PATTERN.matcher(email).matches();
-    }
-
-    /**
-     * Returns the inputted {@link java.lang.String} if the {@link java.lang.String} is not <b>null</b> nor {@link java.lang.String#isEmpty()} (after a {@link java.lang.String#trim()})
-     *
-     * @param str the {@link java.lang.String} to be checked (and trimmed).
-     * @return <b>null</b> if the inputted {@link java.lang.String} is <b>null</b> or if the {@link java.lang.String} after a {@link java.lang.String#trim()} is {@link java.lang.String#isEmpty()}
-     * else it will return the actual inputted {@link java.lang.String} with the applied {@link java.lang.String#trim()}
-     */
-    public static String nullOrEmpty(String str) {
-        if (str == null) {
-            return null;
-        } else {
-            str = str.trim();
-            return str.isEmpty() ? null : str;
-        }
-    }
-
-    /**
-     * Wrapper for {@link #nullOrEmpty(String)}, instead of returning the {@link java.lang.String} it checks to see weather the function returns <b>null</b> (which means that the inputted {@link java.lang.String} is <b>null</b> or empty)
-     *
-     * @param str the {@link java.lang.String} to check
-     * @return <b>true</b> if the {@link java.lang.String} is <b>null</b> or {@link java.lang.String#isEmpty()} (after a {@link java.lang.String#trim()})
-     * @see #nullOrEmpty(String)
-     */
-    public static boolean isNullOrEmpty(String str) {
-        return nullOrEmpty(str) == null;
-    }
-
-    public static String censorEmail(final String email) {
-        return email.charAt(0) + "***" + email.substring(email.indexOf('@') - 1);
     }
 }

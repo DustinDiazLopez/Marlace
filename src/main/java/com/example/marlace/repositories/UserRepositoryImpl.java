@@ -14,16 +14,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManagerFactory;
-import java.sql.Types;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
     private static final String SQL_SELECT_USER_BY_EMAIL = "SELECT * FROM `user` WHERE `email` = ?";
-    private static final String SQL_UPDATE_USER_BY_ID = "UPDATE `user` SET `firstName` = ?, `lastName` = ?, `email` = ?, `password` = ?, `description` = ? WHERE userId = ?";
+    private static final String HQL_FIND_USER_BY_EMAIL = "from User u where u.email = :email ";
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(UserRepositoryImpl.class);
     private final UserRowMapper userRowMapper = new UserRowMapper();
 
     @Autowired
@@ -68,12 +68,14 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_EMAIL, userRowMapper, email);
+    public User findByEmail(final String email) {
+        final Map<String, Object> params = new HashMap<>(1);
+        params.put("email", email);
+        return (User) HibernateWrapper.queryList(sessionFactory, HQL_FIND_USER_BY_EMAIL, params).get(0);
     }
 
     @Override
-    public User authenticate(String email, String password) throws MarlaceAuthException {
+    public User authenticate(final String email, final String password) throws MarlaceAuthException {
         try {
             final User user = this.findByEmail(email);
 
@@ -88,14 +90,9 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Boolean emailExists(String email) {
-        final List<User> users = jdbcTemplate.query(
-                SQL_SELECT_USER_BY_EMAIL,
-                new Object[]{email},
-                new int[]{Types.VARCHAR},
-                userRowMapper
-        );
-
-        return users.size() > 0;
+    public Boolean emailExists(final String email) {
+        final Map<String, Object> params = new HashMap<>(1);
+        params.put("email", email);
+        return HibernateWrapper.queryList(sessionFactory, HQL_FIND_USER_BY_EMAIL, params).size() > 0;
     }
 }

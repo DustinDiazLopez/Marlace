@@ -3,6 +3,7 @@ package com.example.marlace.utilities;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Hibernate wrapper
@@ -17,6 +19,32 @@ import java.util.List;
 public class HibernateWrapper {
 
     private static final Logger log = LoggerFactory.getLogger(HibernateWrapper.class);
+
+    /**
+     * @see HibernateWrapper#query(SessionFactory, String, Map)
+     */
+    public static List<?> queryList(final SessionFactory sessionFactory, final String hqlQueryString,
+                                    Map<String, Object> params) {
+        return query(sessionFactory, hqlQueryString, params).list();
+    }
+
+    /**
+     * Queries the database with the given hibernate query language string.
+     *
+     * @param sessionFactory hibernate session factory
+     * @param hqlQueryString HQL string
+     * @param params         map containing the parameters in the HQL.
+     * @return {@link Query} instance of the HQL string.
+     * @see Session#createQuery(String)
+     */
+    public static Query<?> query(final SessionFactory sessionFactory, final String hqlQueryString,
+                                 Map<String, Object> params) {
+        final Session session = sessionFactory.openSession();
+        final Query<?> query = session.createQuery(hqlQueryString);
+        for (Map.Entry<String, Object> param : params.entrySet()) query.setParameter(param.getKey(), param.getValue());
+        return query;
+    }
+
 
     /**
      * @see HibernateWrapper#save(SessionFactory, Object...)

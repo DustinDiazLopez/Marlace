@@ -16,7 +16,7 @@ public class MarlaceApplication implements CommandLineRunner {
 
 	private static final Logger log = LoggerFactory.getLogger(MarlaceApplication.class);
 
-	public static void main(String[] args) {
+	public static void main(String... args) {
 		SpringApplication.run(MarlaceApplication.class, args);
 	}
 
